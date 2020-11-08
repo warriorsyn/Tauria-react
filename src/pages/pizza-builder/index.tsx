@@ -19,10 +19,7 @@ const PizzaBuilder: React.FC = () => {
 
   const { ingredients, showIngredients, selectedIngredients, setSelectedIngredients } = useIngredients();
 
-  useEffect(() =>{
-
-  }, [])
-
+  
   function handleSizeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const size = sizes?.find(s => s.id.toString() === event.target.value);
     if (!size) return;
