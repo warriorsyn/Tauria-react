@@ -12,7 +12,9 @@ const FinishOrder: React.FC = (props: any) => {
   
   useEffect(() => {
 
-    const { order } = queryString.parse(props.location.search);
+    let { order } = queryString.parse(props.location.search);
+
+    order = atob(order as string);
 
     setOrder(JSON.parse(order as string));
     

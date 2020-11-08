@@ -1,12 +1,11 @@
 import React, {  Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import * as uuid from 'uuid';
+
+import { useCrust } from '../../context/crust.context';
+import { useIngredients } from '../../context/ingredients.context';
+import { useSize } from '../../context/Size.context';
 
 import { CrustTypeEnum } from '../../enums/CrustTypeEnum';
-
-import ICrustType from '../../interfaces/ICrustType';
-import IIngredients from '../../interfaces/IIngredients';
-import IPizzaSizes from '../../interfaces/IPizzaSizes';
 
 import {Button, Content} from './style';
 
@@ -14,111 +13,15 @@ const PizzaBuilder: React.FC = () => {
 
   const history = useHistory();
 
-  const [sizes, setSizes] = useState<IPizzaSizes[]>([]);
+  const { sizes, selectedSize, setSelectedSize } = useSize();
 
-  const [selectedSize, setSelectedSize] = useState<IPizzaSizes>();
+  const { crustType, showCrusts,selectedCrustType,setSelectedCrustType } = useCrust();
 
-  const [crustType, setCrustType] = useState<ICrustType[]>();
+  const { ingredients, showIngredients, selectedIngredients, setSelectedIngredients } = useIngredients();
 
-  const [selectedCrustType, setSelectedCrustType] = useState<ICrustType>();
+  useEffect(() =>{
 
-  const [ingredients, setIngredients] = useState<IIngredients[]>();
-
-  const [selectedIngredients, setSelectedIngredients] = useState<Array<IIngredients>>([])
-
-  const mockSize: IPizzaSizes[] = [
-    {
-      id: 1,
-      size: 'Small',
-      price: 8
-    },
-    {
-      id: 2,
-      size: 'medium',
-      price: 10
-    },
-    {
-      id: 3,
-      size: 'Large',
-      price: 12
-    }
-  ];
-
-  const mockCrust: ICrustType[] = [
-    {
-      id: 1,
-      type: CrustTypeEnum.Thin,
-      price: 2
-    },
-    {
-      id: 2,
-      type: CrustTypeEnum.Thick,
-      price: 4
-    }
-  ];
-
-  const igredientsMock: IIngredients[] = [
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Pepperoni',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Onions',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Sausage',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Bacon',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Extra cheese',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Black olives',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Green peppers',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Pineapple',
-    },
-    {
-      id: uuid.v4(),
-      imageUrl: '',
-      name: 'Spinach',
-    },
-  ]
-
-  useEffect(() => {
-    setInterval(() => {
-      setSizes(mockSize)
-    }, 1000);
   }, [])
-
-
-  function showCrustType(): void {
-    setCrustType(mockCrust);
-  }
-
-  function showIngredients(): void {
-    setIngredients(igredientsMock);
-  }
 
   function handleSizeChange(event: React.ChangeEvent<HTMLInputElement>): void {
     const size = sizes?.find(s => s.id.toString() === event.target.value);
@@ -126,7 +29,7 @@ const PizzaBuilder: React.FC = () => {
 
     setSelectedSize(size);
 
-    showCrustType();
+    showCrusts();
   }
 
   function handleCrustChange(event: React.ChangeEvent<HTMLInputElement>): void {
@@ -202,7 +105,7 @@ const PizzaBuilder: React.FC = () => {
 
     history.push({
       pathname: 'finishorder',
-      search: `?order=${JSON.stringify(order)}`
+      search: `?${'order='+btoa(JSON.stringify(order))}`
     })
   }
 
