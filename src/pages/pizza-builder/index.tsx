@@ -1,34 +1,13 @@
-import { stat } from 'fs';
-import React, { ChangeEvent, Fragment, InputHTMLAttributes, useEffect, useState } from 'react';
+import React, {  Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as uuid from 'uuid';
+import { CrustTypeEnum } from '../../enums/CrustTypeEnum';
+import ICrustType from '../../interfaces/ICrustType';
+import IIngredients from '../../interfaces/IIngredients';
 
-import {Button, Container, Content} from './style';
+import IPizzaSizes from '../../interfaces/IPizzaSizes';
 
-
-interface IPizzaSizes {
-  id: number;
-  size: string,
-  price: number
-}
-
-enum CrustTypeEnum {
-  Thin = 1,
-  Thick = 2
-}
- 
-interface ICrustType {
-  id: number,
-  type: CrustTypeEnum,
-  price: number
-}
-
-
-interface IIngredients {
-  id: string;
-  name: string,
-  imageUrl: string,
-}
+import {Button, Content} from './style';
 
 const PizzaBuilder: React.FC = () => {
 
@@ -45,8 +24,6 @@ const PizzaBuilder: React.FC = () => {
   const [ingredients, setIngredients] = useState<IIngredients[]>();
 
   const [selectedIngredients, setSelectedIngredients] = useState<Array<IIngredients>>([])
-
-  const loading = false;
 
   const mockSize: IPizzaSizes[] = [
     {

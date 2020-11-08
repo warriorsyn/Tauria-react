@@ -1,14 +1,24 @@
 import React, {Fragment, useEffect, useState } from 'react';
-
+import queryString from "query-string";
 
 import {Button, Content} from './style';
+import IOrder from '../../interfaces/IOrder';
+import { CrustTypeEnum } from '../../enums/CrustTypeEnum';
 
 
 
-const FinishOrder: React.FC = () => {
+const FinishOrder: React.FC = (props: any) => {
 
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState<IOrder>();
   
+  useEffect(() => {
+
+    const { order } = queryString.parse(props.location.search);
+
+    setOrder(JSON.parse(order as string));
+
+    console.log(JSON.parse(order as string));
+  }, [])
 
   return (
     <Fragment>
@@ -25,27 +35,29 @@ const FinishOrder: React.FC = () => {
 
                   <div className="row no-gutters">
                     <div className="col-12 size">
-                      Size:
-                      <span>Big()</span>
+                      <strong>Size:</strong>
+                      <span>{order?.size.size} (${order?.size.price})</span>
                     </div>
                     <div className="crust col-12">
                       <div>
-                        Crust:
-                        <span>Big()</span>
+                        <strong>Crust:</strong>
+                        <span>{order?.crust.type === CrustTypeEnum.Thin ? 'Thin' : 'Thick'} (${order?.crust.price})</span>
                       </div>
                     </div>
 
                     <div className="crust col-12">
                       <div>
-                        Ingredients:
-                        <span>Big</span>
+                        <strong>Ingredients:</strong>
+                        {order?.ingredients.map(i => (
+                          <span>{i.name}, </span>
+                        ))}
                       </div>
                     </div>
 
                     <hr/>
 
                     <div className="col-12">
-                      Final Price: 100
+                      Final Price: ${order?.total}
                     </div>
                   </div>
               </Content>
@@ -55,6 +67,5 @@ const FinishOrder: React.FC = () => {
     </Fragment>
   );
 }
-
 
 export default FinishOrder;
