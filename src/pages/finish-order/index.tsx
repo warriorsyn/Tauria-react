@@ -1,11 +1,10 @@
 import React, {Fragment, useEffect, useState } from 'react';
 import queryString from "query-string";
 
-import {Button, Content} from './style';
 import IOrder from '../../interfaces/IOrder';
 import { CrustTypeEnum } from '../../enums/CrustTypeEnum';
 
-
+import {Content} from './style';
 
 const FinishOrder: React.FC = (props: any) => {
 
@@ -16,8 +15,7 @@ const FinishOrder: React.FC = (props: any) => {
     const { order } = queryString.parse(props.location.search);
 
     setOrder(JSON.parse(order as string));
-
-    console.log(JSON.parse(order as string));
+    
   }, [])
 
   return (

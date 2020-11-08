@@ -1,10 +1,11 @@
 import React, {  Fragment, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as uuid from 'uuid';
+
 import { CrustTypeEnum } from '../../enums/CrustTypeEnum';
+
 import ICrustType from '../../interfaces/ICrustType';
 import IIngredients from '../../interfaces/IIngredients';
-
 import IPizzaSizes from '../../interfaces/IPizzaSizes';
 
 import {Button, Content} from './style';
@@ -209,10 +210,7 @@ const PizzaBuilder: React.FC = () => {
     <Fragment>
         <div className="container">
           <div className="row mt-4">
-            <div className="col-2">
-              ola
-            </div>
-            <div className="col-10">
+            <div className="col-12">
               <Content>
                   <div className="card-main row no-gutters">
                     <div className="title">
@@ -223,7 +221,7 @@ const PizzaBuilder: React.FC = () => {
 
                   <div className="row">
                     <div className="col-12">
-                      <span className="title">Choose the pizza size</span>
+                      <strong className="title">Choose the pizza size</strong>
                       
                       <div className="radio-group d-flex">
                         {sizes?.map(item => (
@@ -238,7 +236,7 @@ const PizzaBuilder: React.FC = () => {
 
                   <div className="row">
                     <div className="col-12">
-                      <span className="title">{crustType && "Choose crust type"}</span>
+                      <strong className="title">{crustType && "Choose crust type"}</strong>
                       
                       <div className="radio-group d-flex">
                         {crustType?.map(item => (
@@ -253,12 +251,12 @@ const PizzaBuilder: React.FC = () => {
 
                   <div className="row">
                     <div className="col-12">
-                      <span className="title">{ingredients && "Choose the ingredients (After 3 ingredients each one will cost $0.50"}</span>
+                      <strong className="title">{ingredients && "Choose the ingredients (After 3 ingredients each one will cost $0.50)"}</strong>
                       
                       <div className="radio-group d-flex flex-wrap">
                         {ingredients?.map(item => (
                           <div key={item.id} className="mr-3">
-                            <input name="ingredients" onChange={(e: any) => handleIngredientsSelection(e)} id={`${item.id.toString()}`} checked={!!selectedIngredients.find(s => s.id == item.id)} value={item.id} type="checkbox" />
+                            <input className="mr-1" name="ingredients" onChange={(e: any) => handleIngredientsSelection(e)} id={`${item.id.toString()}`} checked={!!selectedIngredients.find(s => s.id == item.id)} value={item.id} type="checkbox" />
                             <label htmlFor={`${item.id.toString()}`}>{item.name}</label>
                           </div>
                         ))}
@@ -277,11 +275,8 @@ const PizzaBuilder: React.FC = () => {
             </div>
           </div>
         </div>
-
-        <button onClick={() => console.log(selectedIngredients)}>asd</button>
     </Fragment>
   );
 }
-
 
 export default PizzaBuilder;
