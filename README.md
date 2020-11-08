@@ -2,6 +2,8 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+### `Clone the project`
+Clone the project downloading it from github in your git cli
 
 ### `yarn or npm install`
 Download all depedencies of the project
